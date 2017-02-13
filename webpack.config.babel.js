@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import FlowStatusPlugin from 'flow-status-webpack-plugin'
 
 const htmlMinifyOptions = {
     collapseWhitespace: true,
@@ -15,6 +16,9 @@ const commonPlugins = [
     new HtmlWebpackPlugin({
         template: 'index.html',
         minify: htmlMinifyOptions,
+    }),
+    new FlowStatusPlugin({
+        failOnError: true,
     }),
 ]
 
