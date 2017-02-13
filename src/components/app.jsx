@@ -2,8 +2,12 @@
 
 import React from 'react'
 
-const App = () => (
-  <div>Hello!</div>
+type Props = {
+  text: string
+}
+
+const App = ({text}: Props) => (
+  <div>{text}</div>
 )
 
 export default App
