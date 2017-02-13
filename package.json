@@ -1,0 +1,6 @@
+{
+  "name": "no-filter",
+  "dependencies": {
+    "webpack": "2"
+  }
+}
