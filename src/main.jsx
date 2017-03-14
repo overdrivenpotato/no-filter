@@ -5,6 +5,6 @@ import { render } from 'react-dom'
 import App from './components/app'
 
 render(
-  <App text='Marko is a cool cat!' />,
+  <App text='Suh dude' />,
   document.getElementById('root')
 )
