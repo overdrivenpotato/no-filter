@@ -37,7 +37,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "build": "npm run clean && NODE_ENV=production webpack --optimize-minimize --display-error-details",
+    "build": "npm run clean && NODE_ENV=production webpack --optimize-minimize",
     "start": "npm run clean && npm-run-all --parallel start:server start:app watch:server watch:app",
     "start:server": "nodemon --config nodemon-server.json",
     "start:app": "react-native start >/dev/null",

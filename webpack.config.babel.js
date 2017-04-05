@@ -6,6 +6,9 @@ import FlowWebpackPlugin from 'flow-webpack-plugin'
 import nodeExternals from 'webpack-node-externals'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
+const SRC_DIR = path.join(__dirname, 'src')
+const BUILD_DIR = path.join(__dirname, 'build')
+const FLOW_BIN = path.join(__dirname, 'node_modules', '.bin', 'flow')
 
 const htmlMinifyOptions = {
   collapseWhitespace: true,
@@ -21,7 +24,7 @@ const commonPlugins = [
   new webpack.NoEmitOnErrorsPlugin(),
   new FlowWebpackPlugin({
     failOnError: true,
-    flowPath: path.join(__dirname, 'node_modules', '.bin', 'flow'),
+    flowPath: FLOW_BIN,
   }),
 ]
 
@@ -52,10 +55,10 @@ const config = ({
 }) => ({
   target,
   bail: true,
-  context: path.join(__dirname, 'src', prefix),
+  context: path.join(SRC_DIR, prefix),
   output: {
     filename: bundleName,
-    path: path.join(__dirname, 'build', prefix),
+    path: path.join(BUILD_DIR, prefix),
   },
   entry: entry.concat([
     './main.js',
@@ -89,7 +92,8 @@ const config = ({
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  // Don't import webpack inside of webpack
+  // Don't import webpack inside of webpack. The build requires this as we
+  // import this config from within the server.
   externals: [
     nodeExternals({
       whitelist: module => (
