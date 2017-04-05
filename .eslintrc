@@ -1,14 +1,22 @@
 {
-    extends: [
-        'standard',
-        'standard-react',
-        'plugin:flowtype/recommended',
-    ],
-    plugins: [
-        'flowtype',
-    ],
-    parserOptions: {
-        sourceType: 'module',
-        failOnError: true,
-    },
+  extends: [
+    'standard',
+    'standard-react',
+    'plugin:flowtype/recommended',
+  ],
+  plugins: [
+    'flowtype',
+  ],
+  parserOptions: {
+    sourceType: 'module',
+    failOnError: true,
+  },
+  globals: {
+    fetch: false,
+  },
+  rules: {
+    'comma-dangle': [ 'error', 'always-multiline' ],
+    'no-undef': [ 'off' ],
+    'no-unused-vars': [ 'off' ],
+  },
 }

@@ -1,0 +1,5 @@
+{
+  "watch": [ "build/server/" ],
+  "exec": "if [ -e build/server/server.js ]; then node build/server/server.js; fi",
+  "ext": "js"
+}
