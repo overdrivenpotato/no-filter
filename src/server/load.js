@@ -2,7 +2,7 @@
 
 import colors from 'colors'
 
-import type { Application } from 'express'
+import type { $Application } from 'express'
 
 // Print which port we are serving
 export const portNotify = () => {
@@ -12,7 +12,7 @@ export const portNotify = () => {
 let port = 3000
 
 // Serve the app at an available port
-export default (app: Application) => {
+export default (app: $Application) => {
   // Try to find the next available port
   if (process.env.NODE_ENV === 'production') {
     app.listen(80)

@@ -1,28 +1,39 @@
 // @flow
 
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View, StatusBar } from 'react-native'
+import { Route, Redirect } from 'react-router'
+
+import RouteWrapper from './route-wrapper'
+import Conversation from './conversation'
+import Conversations from './conversations'
 
 const styles = {
-  view: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  hello: {
-    color: 'orange',
-    fontSize: 50,
-  },
-  world: {
-    color: 'red',
-    fontSize: 100,
+  component: {
+    flexGrow: 1,
+    backgroundColor: '#ddd',
   },
 }
 
 export default () => (
-  <View style={styles.view}>
-    <Text style={styles.hello}>hello</Text>
-    <Text style={styles.world}>WORLD</Text>
+  <View style={styles.component}>
+    <StatusBar
+      backgroundColor='transparent'
+      translucent
+      animated
+    />
+    { /* Redirect to conversations by default */ }
+    <Redirect to='/conversations' />
+    <RouteWrapper
+      exact
+      path='/conversations'
+      component={Conversations}
+      title='Messages'
+    />
+    <RouteWrapper
+      path='/conversations/:id'
+      component={Conversation}
+      title='Conversation'
+    />
   </View>
 )

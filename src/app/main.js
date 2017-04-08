@@ -6,6 +6,7 @@ import 'whatwg-fetch'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { AppRegistry } from 'react-native'
+import { NativeRouter } from 'react-router-native'
 
 import App from './components/app'
 import configureStore from './configure-store'
@@ -18,7 +19,9 @@ class Wrapper extends React.Component {
 
   render () {
     return <Provider store={this.state.store}>
-      <App />
+      <NativeRouter>
+        <App />
+      </NativeRouter>
     </Provider>
   }
 }

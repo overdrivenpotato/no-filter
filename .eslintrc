@@ -18,6 +18,7 @@
     'comma-dangle': [ 'error', 'always-multiline' ],
     'no-undef': [ 'off' ],
     'no-unused-vars': [ 'off' ],
+    'react/jsx-no-undef': [ 'off' ],
     'max-len': [ 'error', 80 ],
   },
 }
