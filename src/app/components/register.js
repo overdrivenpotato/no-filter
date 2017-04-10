@@ -49,7 +49,7 @@ class LoginForm extends Component {
   }
 
   sendRegister = () => {
-    const { email, password, cnfmpassword } = this.state
+    const { email, name, password, cnfmpassword } = this.state
 
     Keyboard.dismiss()
 
@@ -60,7 +60,10 @@ class LoginForm extends Component {
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(this.onRegisterSuccess)
-        .catch(this.displayError)
+        .catch((error) =>{
+          console.log(error)
+          this.displayError()
+        })
     }
   }
 
@@ -71,6 +74,15 @@ class LoginForm extends Component {
   }
 
   onRegisterSuccess = () => {
+    const { email, name } = this.state
+
+    firebase.database().ref('/users/' + firebase.auth().currentUser.uid).set(
+      {
+        name: name,
+        email: email,
+      }
+    )
+
     this.setState({ error: 'Registered!', loading: false })
     /*
       TODO logic to execute when the user registers
