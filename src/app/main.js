@@ -29,7 +29,7 @@ firebase.initializeApp({
   databaseURL: 'https://no-filter-aa5d0.firebaseio.com',
   projectId: 'no-filter-aa5d0',
   storageBucket: 'no-filter-aa5d0.appspot.com',
-  messagingSenderId: '536468709239'
+  messagingSenderId: '536468709239',
 })
 
 // Wrap the main app in a class so that we can hot reload reducers
