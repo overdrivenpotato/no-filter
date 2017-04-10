@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, TextInput, Keyboard } from 'react-native'
+import { View, TextInput, Keyboard, ScrollView } from 'react-native'
 import firebase from 'firebase'
 
 import * as commonColors from 'app/common-colors'
@@ -100,7 +100,7 @@ class LoginForm extends Component {
 
   render () {
     return (
-      <View style={styles.component}>
+      <ScrollView style={styles.component}>
         <View style={styles.base.title}>
           <Text style={styles.text}>
             Welcome To No Filter
@@ -127,7 +127,7 @@ class LoginForm extends Component {
         />
         {this.renderLoginButton()}
         {this.renderRegisterButton()}
-      </View>
+      </ScrollView>
     )
   }
 }
