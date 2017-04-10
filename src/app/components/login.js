@@ -17,7 +17,7 @@ const styles = {
     title: {
       elevation: 2,
       backgroundColor: commonColors.DARK_BG,
-      marginBottom: 30
+      marginBottom: 30,
     }
 
   },
@@ -25,7 +25,7 @@ const styles = {
     fontSize: 25,
     alignSelf: 'center',
     color: commonColors.RED,
-    padding: 30
+    padding: 30,
   },
   input: {
     marginLeft: 40,
@@ -34,7 +34,7 @@ const styles = {
   },
   errorText: {
     color: commonColors.RED,
-    alignSelf: 'center'
+    alignSelf: 'center',
   }
 }
 
@@ -43,7 +43,7 @@ class LoginForm extends Component {
     email: '',
     password: '',
     error: '',
-    loading: false
+    loading: false,
   }
 
   sendLogin() {
