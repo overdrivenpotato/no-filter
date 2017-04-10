@@ -41,7 +41,7 @@ const clientPlugins = [
 
 const serverPlugins = PRODUCTION ? [] : [
   new WebpackShellPlugin({
-    onBuildEnd: [ 'npm run start:server' ],
+    onBuildEnd: [ 'npm run onbuild' ],
   }),
 ]
 
