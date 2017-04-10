@@ -2,11 +2,14 @@
 
 import colors from 'colors'
 
+import reactNativeDevServer from './react-native-dev-server'
+
 import type { $Application } from 'express'
 
 // Print which port we are serving
-export const portNotify = () => {
-  console.log(colors.blue(`\nListening on http://localhost:${port}`))
+const portNotify = () => {
+  console.log(colors.bold(colors.magenta('\nStarted react native packager')))
+  console.log(colors.blue(`Listening on http://localhost:${port}\n`))
 }
 
 let port = 3000
@@ -19,7 +22,10 @@ export default (app: $Application) => {
   } else {
     // Try listening at the current port, incrementing by one if it is taken
     const listen = () => {
-      app.listen(port).on('error', () => {
+      app.listen(port, () => {
+        reactNativeDevServer(port)
+        portNotify()
+      }).on('error', () => {
         port++
         listen()
       })

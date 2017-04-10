@@ -1,8 +1,11 @@
+// @flow
+
 import webpack from 'webpack'
 import path from 'path'
 import os from 'os'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import FlowWebpackPlugin from 'flow-webpack-plugin'
+import WebpackShellPlugin from 'webpack-shell-plugin'
 import nodeExternals from 'webpack-node-externals'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
@@ -33,24 +36,20 @@ const clientPlugins = [
     template: 'index.html',
     minify: htmlMinifyOptions,
   }),
-]
-
-const serverPlugins = []
-
-const productionPlugins = []
-const devPlugins = [
   new webpack.HotModuleReplacementPlugin(),
 ]
 
-const plugins = PRODUCTION
-  ? commonPlugins.concat(productionPlugins)
-  : commonPlugins.concat(devPlugins)
+const serverPlugins = PRODUCTION ? [] : [
+  new WebpackShellPlugin({
+    onBuildEnd: [ 'npm run start:server' ],
+  }),
+]
 
 const config = ({
-  target = 'web',
+  target,
   prefix,
-  bundleName = 'bundle.[hash].js',
-  entry = [],
+  bundleName,
+  entry,
   plugins,
 }) => ({
   target,
@@ -108,19 +107,22 @@ const config = ({
 
 // Export so that the server can use this for webpack-dev-middleware.
 export const clientConfig = config({
+  target: 'web',
   prefix: 'client',
+  bundleName: 'bundle.[hash].js',
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
   ],
-  plugins: plugins.concat(clientPlugins),
+  plugins: commonPlugins.concat(clientPlugins),
 })
 
 const serverConfig = config({
   target: 'node',
   prefix: 'server',
   bundleName: 'server.js',
-  plugins: plugins.concat(serverPlugins),
+  entry: [],
+  plugins: commonPlugins.concat(serverPlugins),
 })
 
 // Export only the server if we are in dev, so that the server can run
