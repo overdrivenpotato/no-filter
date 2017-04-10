@@ -19,7 +19,7 @@ const ts = createTimesyncServer({
   server: timesyncServer,
 })
 
-bumpDetect(() => alert(`Detected bump at ${Math.round(ts.now())}! :D`))
+bumpDetect(() => console.log(`Detected bump at ${Math.round(ts.now())}! :D`))
 
 // Wrap the main app in a class so that we can hot reload reducers
 class Wrapper extends React.Component {

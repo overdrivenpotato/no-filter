@@ -103,6 +103,9 @@ const config = ({
       ),
     }),
   ],
+  stats: {
+    chunks: false,
+  },
 })
 
 // Export so that the server can use this for webpack-dev-middleware.

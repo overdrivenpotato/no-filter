@@ -37,7 +37,6 @@ const renderRow = (row: MessageRow | LastRow) => (
 export default () => (
   <ListView
     renderRow={renderRow}
-    style={{ height: 100 }}
     dataSource={new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
     }).cloneWithRows([
