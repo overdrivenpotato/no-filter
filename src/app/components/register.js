@@ -60,7 +60,7 @@ class LoginForm extends Component {
     } else {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(this.onRegisterSuccess)
-        .catch((error) =>{
+        .catch((error) => {
           console.log(error)
           this.displayError()
         })
