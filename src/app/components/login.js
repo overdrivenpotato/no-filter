@@ -11,21 +11,21 @@ import LoadingSpinner from './LoadingSpinner'
 
 const styles = {
   component: {
-    flex: 1
+    flex: 1,
   },
   base: {
     title: {
       elevation: 2,
       backgroundColor: commonColors.DARK_BG,
-      marginBottom: 30
-    }
+      marginBottom: 30,
+    },
 
   },
   text: {
     fontSize: 25,
     alignSelf: 'center',
     color: commonColors.RED,
-    padding: 30
+    padding: 30,
   },
   input: {
     marginLeft: 40,
@@ -34,8 +34,8 @@ const styles = {
   },
   errorText: {
     color: commonColors.RED,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 }
 
 class LoginForm extends Component {
@@ -43,10 +43,10 @@ class LoginForm extends Component {
     email: '',
     password: '',
     error: '',
-    loading: false
+    loading: false,
   }
 
-  sendLogin() {
+  sendLogin = () => {
     const { email, password } = this.state
 
     Keyboard.dismiss()
@@ -56,67 +56,75 @@ class LoginForm extends Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(this.onLoginSuccess.bind(this))
       .catch(this.displayError.bind(this))
-
-
   }
 
-  redirectRegister() {
+  redirectRegister = () => {
     /*
       TODO redirect to register screen
     */
   }
 
-  onLoginSuccess() {
+  onLoginSuccess () {
     this.setState({ error: 'Logged in!', loading: false })
     /*
       TODO logic to execute when the user logs in
     */
   }
 
-  displayError() {
+  displayError () {
     this.setState({ error: 'There was an error loggin in.', loading: false })
   }
 
-  renderLoginButton() {
-    if(this.state.loading) {
+  renderLoginButton () {
+    if (this.state.loading) {
       return (
         <LoadingSpinner size={'small'} />
       )
     }
     return (
-      <Button onPress={this.sendLogin.bind(this)} children='login'>
+      <Button onPress={this.sendLogin} children='login'>
         Login
       </Button>
     )
   }
 
-  renderRegisterButton() {
-    if(!this.state.loading) {
+  renderRegisterButton () {
+    if (!this.state.loading) {
       return (
-        <Button onPress={this.redirectRegister.bind(this)} children='Register'>
+        <Button onPress={this.redirectRegister} children='Register'>
           Register
         </Button>
       )
     }
-
   }
 
-
-
-  render() {
+  render () {
     return (
-      <View style={ styles.component }>
-        <View style={ styles.base.title }>
-          <Text style={ styles.text }>
+      <View style={styles.component}>
+        <View style={styles.base.title}>
+          <Text style={styles.text}>
             Welcome To No Filter
           </Text>
 
         </View>
-        <Text style={ styles.errorText }>
+        <Text style={styles.errorText}>
           {this.state.error}
         </Text>
-        <TextInput value={this.state.email} onChangeText={email => this.setState({ email })} style={ styles.input } placeholder='email' autoCorrect={false} />
-        <TextInput value={this.state.password} onChangeText={password => this.setState({ password })} style={ styles.input } placeholder='password' autoCorrect={false} secureTextEntry={true}/>
+        <TextInput
+          value={this.state.email}
+          onChangeText={email => this.setState({email})}
+          style={styles.input}
+          placeholder='email'
+          autoCorrect={false}
+        />
+        <TextInput
+          value={this.state.password}
+          onChangeText={password => this.setState({password})}
+          style={styles.input}
+          placeholder='password'
+          autoCorrect={false}
+          secureTextEntry
+        />
         {this.renderLoginButton()}
         {this.renderRegisterButton()}
       </View>
