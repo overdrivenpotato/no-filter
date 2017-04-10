@@ -60,6 +60,12 @@ class LoginForm extends Component {
 
   }
 
+  redirectRegister() {
+    /*
+      TODO redirect to register screen
+    */
+  }
+
   onLoginSuccess() {
     this.setState({ error: 'Logged in!', loading: false })
     /*
@@ -71,7 +77,7 @@ class LoginForm extends Component {
     this.setState({ error: 'There was an error loggin in.', loading: false })
   }
 
-  renderButton() {
+  renderLoginButton() {
     if(this.state.loading) {
       return (
         <LoadingSpinner size={'small'} />
@@ -83,6 +89,19 @@ class LoginForm extends Component {
       </Button>
     )
   }
+
+  renderRegisterButton() {
+    if(!this.state.loading) {
+      return (
+        <Button onPress={this.redirectRegister.bind(this)}>
+          Register
+        </Button>
+      )
+    }
+
+  }
+
+
 
   render() {
     return (
@@ -96,9 +115,10 @@ class LoginForm extends Component {
         <Text style={ styles.errorText }>
           {this.state.error}
         </Text>
-        <TextInput onChangeText={email => this.setState({ email })} style={ styles.input } placeholder='email' autoCorrect={false} />
-        <TextInput onChangeText={password => this.setState({ password })} style={ styles.input } placeholder='password' autoCorrect={false} secureTextEntry={true}/>
-        {this.renderButton()}
+        <TextInput value={this.state.email} onChangeText={email => this.setState({ email })} style={ styles.input } placeholder='email' autoCorrect={false} />
+        <TextInput value={this.state.password} onChangeText={password => this.setState({ password })} style={ styles.input } placeholder='password' autoCorrect={false} secureTextEntry={true}/>
+        {this.renderLoginButton()}
+        {this.renderRegisterButton()}
       </View>
     )
   }
