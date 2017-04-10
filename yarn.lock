@@ -4294,9 +4294,9 @@ react-native@^0.43.0:
     xpipe "^1.0.5"
     yargs "^6.4.0"
 
-"react-navigation@https://github.com/react-community/react-navigation.git":
+"react-navigation@https://github.com/react-community/react-navigation":
   version "1.0.0-beta.7"
-  resolved "https://github.com/react-community/react-navigation.git#511cd3e1bee99352665d4c454c19398578845fea"
+  resolved "https://github.com/react-community/react-navigation#511cd3e1bee99352665d4c454c19398578845fea"
   dependencies:
     clamp "^1.0.1"
     fbjs "^0.8.5"

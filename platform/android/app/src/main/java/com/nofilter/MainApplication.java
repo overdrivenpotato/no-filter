@@ -37,6 +37,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected String getJSMainModuleName() {
       return "bootstrap";
     }
+
+    protected String getBundleAssetName() {
+      return "bootstrap.bundle";
+    }
   };
 
   @Override

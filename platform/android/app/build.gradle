@@ -67,6 +67,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     bundleAssetName: "bootstrap.bundle",
+    entryFile: "bootstrap.js",
     root: "../../../",
 ]
 
