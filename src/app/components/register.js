@@ -99,7 +99,7 @@ class LoginForm extends Component {
     if(!this.state.loading) {
       return (
         <Button onPress={this.redirectLogin.bind(this)}>
-          Go to login
+          Have an account?
         </Button>
       )
     }
