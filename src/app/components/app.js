@@ -7,6 +7,7 @@ import { Route, Redirect } from 'react-router'
 import RouteWrapper from './route-wrapper'
 import Conversation from './conversation'
 import Conversations from './conversations'
+import Login from './login'
 
 const styles = {
   component: {
@@ -23,7 +24,7 @@ export default () => (
       animated
     />
     { /* Redirect to conversations by default */ }
-    <Redirect to='/conversations' />
+    <Redirect to='/login' />
     <RouteWrapper
       exact
       path='/conversations'
@@ -34,6 +35,12 @@ export default () => (
       path='/conversations/:id'
       component={Conversation}
       title='Conversation'
+    />
+    <RouteWrapper
+      exact
+      path='/login'
+      component={Login}
+      title='Login'
     />
   </View>
 )
