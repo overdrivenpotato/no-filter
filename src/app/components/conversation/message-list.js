@@ -36,7 +36,7 @@ export default () => (
         state: 'typing',
         time: date,
         messages: [
-          'typing this rn...'
+          'typing this rn...',
         ],
       },
     ])}

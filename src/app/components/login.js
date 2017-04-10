@@ -84,7 +84,7 @@ class LoginForm extends Component {
       )
     }
     return (
-      <Button onPress={this.sendLogin.bind(this)}>
+      <Button onPress={this.sendLogin.bind(this)} children='login'>
         Login
       </Button>
     )
@@ -93,7 +93,7 @@ class LoginForm extends Component {
   renderRegisterButton() {
     if(!this.state.loading) {
       return (
-        <Button onPress={this.redirectRegister.bind(this)}>
+        <Button onPress={this.redirectRegister.bind(this)} children='Register'>
           Register
         </Button>
       )

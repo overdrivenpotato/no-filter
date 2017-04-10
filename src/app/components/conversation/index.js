@@ -17,7 +17,7 @@ const styles = {
 
 export default () => (
   <View style={styles.component}>
-    <MessageList/>
+    <MessageList />
     <MessageInput />
   </View>
 )

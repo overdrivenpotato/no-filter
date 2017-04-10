@@ -43,7 +43,7 @@ const typingStyles = {
     textShadowOffset: {
       width: 0,
       height: 1,
-    }
+    },
   },
 }
 

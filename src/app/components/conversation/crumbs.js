@@ -48,14 +48,14 @@ export default ({ align, highlight }: Props) => (
       style={[
         styles.crumb,
         styles.smallCrumb,
-        highlight ? styles.highlight : {}
+        highlight ? styles.highlight : {},
       ]}
     />
     <View
       style={[
         styles.crumb,
         styles.bigCrumb,
-        highlight ? styles.highlight : {}
+        highlight ? styles.highlight : {},
       ]}
     />
   </View>

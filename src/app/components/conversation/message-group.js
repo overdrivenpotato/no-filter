@@ -32,8 +32,8 @@ export default ({ messages, type, state, time }: Props) => (
     {
       messages.map((message, index, array) => (
         <Message
-          first={index == 0}
-          last={index == array.length - 1}
+          first={index === 0}
+          last={index === array.length - 1}
           type={type}
           state={state}
           text={message}
