@@ -8,6 +8,7 @@ import RouteWrapper from './route-wrapper'
 import Conversation from './conversation'
 import Conversations from './conversations'
 import Login from './login'
+import Register from './register'
 
 const styles = {
   component: {
@@ -24,7 +25,7 @@ export default () => (
       animated
     />
     { /* Redirect to conversations by default */ }
-    <Redirect to='/login' />
+    <Redirect to='/register' />
     <RouteWrapper
       exact
       path='/conversations'
@@ -41,6 +42,12 @@ export default () => (
       path='/login'
       component={Login}
       title='Login'
+    />
+    <RouteWrapper
+      exact
+      path='/register'
+      component={Register}
+      title='Register'
     />
   </View>
 )
