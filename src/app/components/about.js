@@ -28,8 +28,7 @@ const styles = {
   bodyText: {
     color: commonColors.RED,
     alignSelf: 'center',
-    textAlign: 'center',
-    fontSize: 18
+    textAlign: 'center'
   },
   bodyView: {
     paddingTop: 80,
