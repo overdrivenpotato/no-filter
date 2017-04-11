@@ -55,7 +55,7 @@
     "start:server": "nodemon --config nodemon-server.json",
     "watch:app": "nodemon --config nodemon-app.json",
     "start:app": "API_SERVER=$(./local_ip.sh) react-native start >/dev/null",
-    "clean": "rm -rf build 2>/dev/null",
+    "clean": "rm -rf build $TMPDIR/react-native-packager-cache-* 2>/dev/null",
     "install:android": "react-native run-android --no-packager --root platform"
   },
   "rnpm": {
