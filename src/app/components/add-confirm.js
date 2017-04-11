@@ -4,42 +4,30 @@ import React, { Component } from 'react'
 import { View, Alert, Button } from 'react-native'
 import * as commonColors from 'app/common-colors'
 import Text from 'app/components/text'
-const onButtonPress = () => {
-  Alert.alert('Button has been pressed!')
-}
+
 const styles = {
   component: {
     flex: 1,
     backgroundColor: '#eee',
     flexDirection: 'column',
   },
-  base: {
-    title: {
-      elevation: 2,
-      backgroundColor: '#eee',
-      marginBottom: 30,
-    },
-  },
-  titleText: {
-    fontSize: 25,
-    alignSelf: 'center',
-    color: commonColors.RED,
-    padding: 30,
-  },
   bodyText: {
-    color: commonColors.RED,
+    color: '#222',
     alignSelf: 'center',
     textAlign: 'center',
+    fontSize: 30,
   },
   bodyView: {
     paddingTop: 80,
     justifyContent: 'center',
   },
-  boxstyle: {
+  boxcontainer: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 2,
-    width: 50,
+  },
+  boxstyle: {
+    width: 200,
     height: 50,
   },
 }
@@ -49,22 +37,26 @@ export default () => (
     <View style={styles.bodyView}>
       <Text style={styles.bodyText}>
         would you like to add {'\n'}
-        INSERT USER HERE
+        John Smith
       </Text>
     </View>
-    <View style={styles.boxstyle}>
-      <Button
-        onPress={onButtonPress}
-        title='yes add that cutie'
-        color='#ddd'
-        accessibilityLabel='you added INSERT NAME HERE'
-      />
-      <Button
-        onPress={onButtonPress}
-        title='NAAAAAAA FAM'
-        color='#ddd'
-        accessibilityLabel='deniedddddd'
-      />
+
+    <View style={styles.boxcontainer}>
+      <View style={styles.boxstyle}>
+        <Button
+          onPress={() => { Alert.alert('Added') }}
+          title='Add Friend'
+          color='#ddd'
+        />
+      </View>
+
+      <View style={styles.boxstyle}>
+        <Button
+          onPress={() => { Alert.alert('Rejected') }}
+          title='Deny Request'
+          color='#ddd'
+        />
+      </View>
     </View>
   </View>
 )
