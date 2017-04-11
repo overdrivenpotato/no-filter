@@ -123,7 +123,7 @@ export const clientConfig = config({
   target: 'web',
   prefix: 'client',
   bundleName: 'bundle.[hash].js',
-  entry: [
+  entry: PRODUCTION ? [] : [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
   ],

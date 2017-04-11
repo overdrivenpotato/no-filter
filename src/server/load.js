@@ -9,7 +9,7 @@ import type { $Application } from 'express'
 const PRODUCTION_PORT = parseInt(process.env.PORT) || 3000
 
 // Print which port we are serving
-const portNotify = (packager: boolean) => {
+const portNotify = (packager: boolean, port: number) => {
   if (packager) {
     console.log(colors.bold(colors.magenta('\nStarted react native packager')))
   }
@@ -24,13 +24,13 @@ export default (app: $Application) => {
   // Try to find the next available port
   if (process.env.NODE_ENV === 'production') {
     app.listen(PRODUCTION_PORT)
-    portNotify(false)
+    portNotify(false, PRODUCTION_PORT)
   } else {
     // Try listening at the current port, incrementing by one if it is taken
     const listen = () => {
       app.listen(port, () => {
         reactNativeDevServer(port)
-        portNotify(true)
+        portNotify(true, port)
       }).on('error', () => {
         port++
         listen()
