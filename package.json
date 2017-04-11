@@ -8,6 +8,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "^1.9.1",
+    "body-parser": "^1.17.1",
     "colors": "^1.1.2",
     "eslint": ">=3.0.0",
     "eslint-config-standard": "^10.0.0",
