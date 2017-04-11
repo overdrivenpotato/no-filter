@@ -11,21 +11,21 @@ import LoadingSpinner from './LoadingSpinner'
 
 const styles = {
   component: {
-    flex: 1
+    flex: 1,
   },
   base: {
     title: {
       elevation: 2,
       backgroundColor: commonColors.DARK_BG,
-      marginBottom: 30
-    }
-
+      marginBottom: 30,
+    },
   },
+
   text: {
     fontSize: 25,
     alignSelf: 'center',
     color: commonColors.RED,
-    padding: 30
+    padding: 30,
   },
   input: {
     marginLeft: 40,
@@ -34,15 +34,15 @@ const styles = {
   },
   errorText: {
     color: commonColors.RED,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 }
 
 class Adder extends Component {
   state = {
     nameToAdd: '',
     error: '',
-    loading: false
+    loading: false,
   }
 
   addByName = () => {
@@ -71,11 +71,12 @@ class Adder extends Component {
   }
 
   displayError = () => {
-    this.setState({ error: 'There was an error adding the user.', loading: false })
+    this.setState({ error: 'There was an error adding the user.',
+      loading: false })
   }
 
-  renderAddButton() {
-    if(!this.state.loading) {
+  renderAddButton () {
+    if (!this.state.loading) {
       return (
         <Button onPress={this.addByName.bind(this)} children='login'>
           Add
@@ -84,20 +85,20 @@ class Adder extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
-      <View style={ styles.component }>
-        <View style={ styles.base.title }>
-          <Text style={ styles.text }>
+      <View style={styles.component}>
+        <View style={styles.base.title}>
+          <Text style={styles.text}>
             Select a user
           </Text>
-
         </View>
-        <Text style={ styles.errorText }>
+        <Text style={styles.errorText}>
           {this.state.error}
         </Text>
-        <TextInput value={this.state.nameToAdd} onChangeText={nameToAdd => this.setState({ nameToAdd })}
-              style={ styles.input } placeholder='nameToAdd' autoCorrect={false} />
+        <TextInput value={this.state.nameToAdd}
+          onChangeText={nameToAdd => this.setState({ nameToAdd })}
+          style={styles.input} placeholder='nameToAdd' autoCorrect={false} />
         {this.renderAddButton()}
       </View>
     )
