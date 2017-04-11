@@ -41,8 +41,9 @@ export default () => (
     <Text style={styles.branding}>No Filter</Text>
     <Text style={styles.user}>John Doe</Text>
     <Link icon='ios-people' to='/conversations' text='Messages' />
-    <Link icon='ios-phone-portrait' to='/add-number' text='Add by number' />
+    <Link icon='ios-phone-portrait' to='/adder' text='Add by number' />
     <Link icon='ios-information-circle' to='/about' text='About' />
+    <Link icon='ios-information-circle' to='/about-user' text='My Profile' />
     <View style={styles.linkFiller} />
     <Link icon='ios-log-out' to='/logout' text='Log Out' />
   </View>

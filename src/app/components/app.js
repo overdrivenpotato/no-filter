@@ -29,7 +29,7 @@ export default () => (
       animated
     />
     { /* Redirect to conversations by default */ }
-    <Redirect to='/about-user' />
+    <Redirect to='/add-confirm' />
     <RouteWrapper
       exact
       path='/conversations'

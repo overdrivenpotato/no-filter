@@ -78,7 +78,7 @@ class Adder extends Component {
   renderAddButton () {
     if (!this.state.loading) {
       return (
-        <Button onPress={this.addByName.bind(this)} children='login'>
+        <Button onPress={this.addByName} children='login'>
           Add
         </Button>
       )
