@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, StatusBar } from 'react-native'
 import { Route, Redirect } from 'react-router'
 import { DrawerNavigator } from 'react-navigation'
@@ -15,6 +16,8 @@ import AboutUser from './about-user'
 import AddByNumber from './add-by-number'
 import Drawer from './drawer'
 import routeWrapper from './route-wrapper'
+
+import type { State } from 'app/reducers'
 
 const styles = {
   component: {
@@ -32,9 +35,6 @@ const pages = {
   },
   addByNumber: {
     screen: routeWrapper(AddByNumber, 'Add By Number'),
-  },
-  login: {
-    screen: routeWrapper(Login),
   },
   register: {
     screen: routeWrapper(Register),
@@ -55,15 +55,27 @@ const options = {
   contentComponent: Drawer,
 }
 
-export const Navigator = DrawerNavigator(pages, options)
+const Navigator = DrawerNavigator(pages, options)
 
-export default () => (
+type StateProps = {
+  loggedIn: boolean,
+}
+
+const Component = ({ loggedIn }: StateProps) => (
   <View style={styles.component}>
     <StatusBar
       backgroundColor='transparent'
       translucent
       animated
     />
-    <Navigator />
+    {
+      loggedIn ? <Navigator /> : <Login />
+    }
   </View>
 )
+
+const mapStateToProps = (state: State): StateProps => ({
+  loggedIn: !!state.user,
+})
+
+export default connect(mapStateToProps)(Component)
