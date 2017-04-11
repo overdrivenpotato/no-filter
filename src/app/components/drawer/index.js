@@ -47,11 +47,6 @@ export default ({ navigation }: any) => (
       screen='addByNumber'
     />
     <Link icon='ios-information-circle' location='About' screen='about' />
-    <Link
-      icon='ios-information-circle'
-      location='My Profile'
-      screen='aboutUser'
-    />
     <View style={styles.linkFiller} />
     <Link icon='ios-log-out' location='Log Out' screen='logout' />
   </View>
