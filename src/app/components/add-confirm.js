@@ -37,7 +37,7 @@ export default () => (
     <View style={styles.bodyView}>
       <Text style={styles.bodyText}>
         would you like to add {'\n'}
-        John Smith
+        John Smith{'\n'}{'\n'}
       </Text>
     </View>
 
