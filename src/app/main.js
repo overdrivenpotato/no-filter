@@ -39,7 +39,6 @@ bumpDetect(() => {
   }
   // var local = '10.16.100.182'
   // var local = '192.168.2.18'
-  var local = LOCATION
 
   fetch('http://' + LOCATION + ':' + PORT + '/api/bump', {
     method: 'POST',
@@ -52,6 +51,20 @@ bumpDetect(() => {
   .then((response) => {
     response.json().then((user) => {
       console.log(user.pairedUser)
+      if (typeof (user.pairedUser) !== 'undefined') {
+        console.log('ITS A MATCH BOYS')
+        /*
+        TODO Some logic to check if both users accept the bump
+        */
+
+        // Inserts the friend into firebase
+        var updates = {}
+        updates['/users/' + body.user + '/friends/'] = user.pairedUser
+
+        firebase.database().ref().update(updates).then(() => {
+          console.log('Added friend')
+        })
+      }
     })
   })
   .catch((err) => {
