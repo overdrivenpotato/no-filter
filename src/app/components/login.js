@@ -48,6 +48,8 @@ class LoginForm extends React.Component {
     loading: false,
   }
 
+  props: DispatchProps
+
   sendLogin = () => {
     const { email, password } = this.state
 
@@ -81,7 +83,7 @@ class LoginForm extends React.Component {
     }
 
     return (
-      <Button onPress={this.sendLogin} children='login'>
+      <Button onPress={this.sendLogin}>
         Login
       </Button>
     )

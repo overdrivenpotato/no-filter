@@ -5,31 +5,12 @@ import { TouchableOpacity, View } from 'react-native'
 import * as commonColors from 'app/common-colors'
 import Text from 'app/components/text'
 
-type Props = {
-  onPress: () => void,
-  children: any,
-}
-
-const Button = ({onPress, children}: Props) => {
-  const { buttonStyle, textStyle } = styles
-
-  return (
-    <View style={styles.view}>
-      <TouchableOpacity onPress={onPress} style={buttonStyle}>
-        <Text style={textStyle}>
-          {children}
-        </Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
 const styles = {
-  buttonStyle: {
+  button: {
     backgroundColor: '#eee',
     borderRadius: 5,
   },
-  textStyle: {
+  text: {
     alignSelf: 'center',
     color: commonColors.DARK_BG,
     fontSize: 16,
@@ -46,4 +27,17 @@ const styles = {
   },
 }
 
-export default Button
+type Props = {
+  onPress: () => void,
+  children?: any,
+}
+
+export default ({ onPress, children }: Props) => (
+  <View style={styles.view}>
+    <TouchableOpacity onPress={onPress} style={styles.button}>
+      <Text style={styles.text}>
+        {children}
+      </Text>
+    </TouchableOpacity>
+  </View>
+)
