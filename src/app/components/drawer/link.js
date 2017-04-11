@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { connect } from 'react-redux'
 import { View, TouchableNativeFeedback } from 'react-native'
 import { Link } from 'react-router-native'
 import { withRouter } from 'react-router'
@@ -9,12 +10,20 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import * as commonColors from 'app/common-colors'
 import Text from 'app/components/text'
 
-type Props = {
-  location: string,
-  icon: string,
-  to: string,
-  text: string,
+import type { State } from 'app/reducers'
+
+type StateProps = {
+  drawer: ?string,
+  onPress: () => void,
 }
+
+type InProps = {
+  icon: string,
+  location: string,
+  screen: string,
+}
+
+type Props = InProps & StateProps
 
 const styles = {
   component: {
@@ -36,15 +45,15 @@ const styles = {
 }
 
 const color = (location, to) => (
-  location.pathname === to ? commonColors.RED : '#ddd'
+  location === to ? commonColors.RED : '#ddd'
 )
 
-const Component = ({ location, icon, to, text }: Props) => (
-  <Link to={to} component={TouchableNativeFeedback} activeOpacity={0.8}>
+const Component = ({ drawer, icon, onPress, location }: Props) => (
+  <TouchableNativeFeedback onPress={onPress}>
     <View style={styles.component}>
       <View style={styles.icon}>
         <Icon
-          color={color(location, to)}
+          color={color(drawer, location)}
           name={icon}
           size={30}
           width={30}
@@ -53,13 +62,18 @@ const Component = ({ location, icon, to, text }: Props) => (
       <Text
         style={[
           styles.text,
-          { color: color(location, to) },
+          { color: color(drawer, location) },
         ]}
       >
-        {text}
+        {location}
       </Text>
     </View>
-  </Link>
+  </TouchableNativeFeedback>
 )
 
-export default withRouter(Component)
+const mapStateToProps = (state: State, props: InProps): StateProps => ({
+  drawer: state.drawer,
+  onPress: () => state.navigation.navigate(props.screen),
+})
+
+export default connect(mapStateToProps)(Component)

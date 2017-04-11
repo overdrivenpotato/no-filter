@@ -1,24 +1,19 @@
 // @flow
 
 export const Actions = {
-  SHOW: 'DRAWER_SHOW',
-  HIDE: 'DRAWER_HIDE',
+  TITLE: 'DRAWER_TITLE',
 }
 
 export type Action =
-  | { type: 'DRAWER_SHOW' }
-  | { type: 'DRAWER_HIDE' }
+  | { type: 'DRAWER_TITLE', title: string }
 
-export type State = boolean
-const defaultState = false
+export type State = ?string
+const defaultState = null
 
 export default (state: State = defaultState, action: Action) => {
   switch (action.type) {
-    case Actions.SHOW:
-      return true
-
-    case Actions.HIDE:
-      return false
+    case Actions.TITLE:
+      return action.title
 
     default:
       return state

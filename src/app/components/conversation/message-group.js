@@ -6,7 +6,7 @@ import { View } from 'react-native'
 import Message from './message'
 import Text from 'app/components/text'
 
-type Props = {
+export type Props = {
   messages: Array<string>,
   type: 'from' | 'to',
   state: 'final' | 'typing',
@@ -28,10 +28,11 @@ const styles = {
 
 export default ({ messages, type, state, time }: Props) => (
   <View style={styles.component}>
-    <Text style={styles.time}>{time}</Text>
+    <Text style={styles.time}>{time.toLocaleTimeString()}</Text>
     {
       messages.map((message, index, array) => (
         <Message
+          key={index}
           first={index === 0}
           last={index === array.length - 1}
           type={type}

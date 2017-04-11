@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { connect } from 'react-redux'
 import {
   View,
   TouchableNativeFeedback,
@@ -9,6 +10,10 @@ import { Link } from 'react-router-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 import Text from 'app/components/text'
+import * as commonColors from 'app/common-colors'
+
+import type { State, Id } from 'app/reducers'
+import type { User } from 'app/reducers/users'
 
 const styles = {
   component: {
@@ -47,28 +52,42 @@ const styles = {
     fontSize: 20,
     color: '#222',
   },
+  highlight: {
+    color: commonColors.RED,
+    textShadowColor: 'rgba(0,0,0,0.15)',
+    textShadowRadius: 3,
+    textShadowOffset: {
+      height: 1,
+      width: 0,
+    },
+  },
 }
 
 type Props = {
-  name: string,
+  user: User,
+  highlight: boolean,
   message: string,
   first?: boolean,
+  navigate: any,
 }
 
-export default ({name, message, first}: Props) => (
-  <Link
-    component={TouchableNativeFeedback}
-    style={styles.component}
-    to={`/conversations/${name}`}
-  >
+const Component = ({user, message, highlight, first, navigate}: Props) => (
+  <TouchableNativeFeedback onPress={navigate}>
     <View style={[
       styles.container.base,
       first ? styles.container.first : {},
     ]}>
       <View style={styles.paddedContainer}>
         <View style={styles.info}>
-          <Text style={styles.name}>{name}</Text>
-          <Text numberOfLines={1}>{message}</Text>
+          <Text style={styles.name}>{user.name}</Text>
+          <Text
+            style={[
+              highlight ? styles.highlight : {},
+            ]}
+            numberOfLines={1}
+          >
+            {message}
+          </Text>
         </View>
         <View>
           <MaterialIcon
@@ -79,5 +98,20 @@ export default ({name, message, first}: Props) => (
         </View>
       </View>
     </View>
-  </Link>
+  </TouchableNativeFeedback>
 )
+
+type InProps = {
+  user: Id,
+  conversation: Id,
+}
+
+const mapStateToProps = (state: State, { user, conversation }: InProps) => ({
+  navigate: () => state.navigation.navigate('conversation', {
+    name: state.users[user].name,
+    conversation,
+  }),
+  user: state.users[user],
+})
+
+export default connect(mapStateToProps)(Component)

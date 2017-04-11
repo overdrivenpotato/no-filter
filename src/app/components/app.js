@@ -3,8 +3,8 @@
 import React from 'react'
 import { View, StatusBar } from 'react-native'
 import { Route, Redirect } from 'react-router'
+import { DrawerNavigator } from 'react-navigation'
 
-import RouteWrapper from './route-wrapper'
 import Conversation from './conversation'
 import Conversations from './conversations'
 import Login from './login'
@@ -12,7 +12,9 @@ import Register from './register'
 import About from './about'
 import AddConfirm from './add-confirm'
 import AboutUser from './about-user'
-import Adder from './adder'
+import AddByNumber from './add-by-number'
+import Drawer from './drawer'
+import routeWrapper from './route-wrapper'
 
 const styles = {
   component: {
@@ -21,6 +23,40 @@ const styles = {
   },
 }
 
+const pages = {
+  conversations: {
+    screen: routeWrapper(Conversations, 'Messages'),
+  },
+  conversation: {
+    screen: routeWrapper(Conversation, params => params.name),
+  },
+  addByNumber: {
+    screen: routeWrapper(AddByNumber, 'Add By Number'),
+  },
+  login: {
+    screen: routeWrapper(Login),
+  },
+  register: {
+    screen: routeWrapper(Register),
+  },
+  aboutUser: {
+    screen: routeWrapper(AboutUser, 'My Profile'),
+  },
+  addConfirm: {
+    screen: routeWrapper(AddConfirm, params => `Add ${params.name}`),
+  },
+  about: {
+    screen: routeWrapper(About, 'About'),
+  },
+}
+
+const options = {
+  drawerWidth: 300,
+  contentComponent: Drawer,
+}
+
+export const Navigator = DrawerNavigator(pages, options)
+
 export default () => (
   <View style={styles.component}>
     <StatusBar
@@ -28,54 +64,6 @@ export default () => (
       translucent
       animated
     />
-    { /* Redirect to conversations by default */ }
-    <Redirect to='/login' />
-    <RouteWrapper
-      exact
-      path='/conversations'
-      component={Conversations}
-      title='Messages'
-    />
-    <RouteWrapper
-      path='/conversations/:id'
-      component={Conversation}
-      title='Conversation'
-    />
-    <RouteWrapper
-      exact
-      path='/login'
-      component={Login}
-      title='Login'
-    />
-    <RouteWrapper
-      exact
-      path='/register'
-      component={Register}
-      title='Register'
-    />
-    <RouteWrapper
-      exact
-      path='/about'
-      component={About}
-      title='About'
-    />
-    <RouteWrapper
-      exact
-      path='/add-confirm'
-      component={AddConfirm}
-      title='Confirm'
-    />
-    <RouteWrapper
-      exact
-      path='/about-user'
-      component={AboutUser}
-      title='About User'
-    />
-    <RouteWrapper
-      exact
-      path='/adder'
-      component={Adder}
-      title='Adder'
-    />
+    <Navigator />
   </View>
 )
