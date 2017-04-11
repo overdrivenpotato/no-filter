@@ -12,6 +12,7 @@ import Register from './register'
 import About from './about'
 import AddConfirm from './add-confirm'
 import AboutUser from './about-user'
+import Adder from './adder'
 
 const styles = {
   component: {
@@ -69,6 +70,12 @@ export default () => (
       path='/about-user'
       component={AboutUser}
       title='About User'
+    />
+    <RouteWrapper
+      exact
+      path='/adder'
+      component={Adder}
+      title='Adder'
     />
   </View>
 )
