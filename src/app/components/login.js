@@ -18,11 +18,7 @@ const styles = {
       elevation: 2,
       backgroundColor: commonColors.DARK_BG,
       marginBottom: 30,
-<<<<<<< HEAD
-    }
-=======
     },
->>>>>>> 855bfb31a41896d9f5349f65369995e5ab795630
 
   },
   text: {
@@ -39,11 +35,7 @@ const styles = {
   errorText: {
     color: commonColors.RED,
     alignSelf: 'center',
-<<<<<<< HEAD
-  }
-=======
   },
->>>>>>> 855bfb31a41896d9f5349f65369995e5ab795630
 }
 
 class LoginForm extends Component {
