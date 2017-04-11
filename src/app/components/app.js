@@ -10,6 +10,9 @@ import Conversations from './conversations'
 import Login from './login'
 import Register from './register'
 import About from './about'
+import AddConfirm from './add-confirm'
+import AboutUser from './about-user'
+import Adder from './adder'
 
 const styles = {
   component: {
@@ -26,7 +29,7 @@ export default () => (
       animated
     />
     { /* Redirect to conversations by default */ }
-    <Redirect to='/about' />
+    <Redirect to='/add-confirm' />
     <RouteWrapper
       exact
       path='/conversations'
@@ -55,6 +58,24 @@ export default () => (
       path='/about'
       component={About}
       title='About'
+    />
+    <RouteWrapper
+      exact
+      path='/add-confirm'
+      component={AddConfirm}
+      title='Confirm'
+    />
+    <RouteWrapper
+      exact
+      path='/about-user'
+      component={AboutUser}
+      title='About User'
+    />
+    <RouteWrapper
+      exact
+      path='/adder'
+      component={Adder}
+      title='Adder'
     />
   </View>
 )

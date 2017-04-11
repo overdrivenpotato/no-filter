@@ -1,6 +1,9 @@
 node_modules
 build
 .gradle
+local.properties
+No Filter.iml
+app.iml
 
 ### macOS ###
 *.DS_Store
