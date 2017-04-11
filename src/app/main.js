@@ -13,7 +13,7 @@ import firebase from 'firebase'
 import App from './components/app'
 import configureStore from './configure-store'
 import bumpDetect from './bump-detect'
-import { timesyncServer } from './api'
+import { timesyncServer, LOCATION, PORT } from './api'
 
 // Sync with the server so that we can match bumps better
 const ts = createTimesyncServer({
@@ -39,8 +39,9 @@ bumpDetect(() => {
   }
   // var local = '10.16.100.182'
   // var local = '192.168.2.18'
-  var local = '172.20.10.3'
-  fetch('http://' + local + ':3000/api/bump', {
+  var local = LOCATION
+
+  fetch('http://' + LOCATION + ':' + PORT + '/api/bump', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
