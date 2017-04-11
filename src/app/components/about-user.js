@@ -108,7 +108,6 @@ export default () => (
       <Text style={styles.bodyText}>
         Developer{'\n'}{'\n'}
       </Text>
-      
     </ScrollView>
   </View>
 )
