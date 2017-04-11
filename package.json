@@ -49,7 +49,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "build": "npm run clean && NODE_ENV=production webpack --optimize-minimize",
+    "build": "npm run clean && NODE_ENV=production webpack",
     "start": "npm run clean && webpack --watch",
     "onbuild": "npm-run-all --parallel start:server watch:app",
     "start:server": "nodemon --config nodemon-server.json",

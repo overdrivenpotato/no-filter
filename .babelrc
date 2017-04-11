@@ -1,6 +1,6 @@
 {
   presets: [ 'react-native', 'flow' ],
   plugins: [
-    "transform-inline-environment-variables",
+    'transform-inline-environment-variables',
   ],
 }

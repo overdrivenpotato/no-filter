@@ -31,6 +31,14 @@ const commonPlugins = [
   }),
 ]
 
+const productionPlugins = [
+  new webpack.optimize.UglifyJsPlugin(),
+]
+
+const plugins = PRODUCTION
+  ? commonPlugins.concat(productionPlugins)
+  : commonPlugins
+
 const clientPlugins = [
   new HtmlWebpackPlugin({
     template: 'index.html',
@@ -80,9 +88,11 @@ const config = ({
       {
         test: /\.jsx?$/,
         loaders: [ 'react-hot-loader/webpack', 'babel-loader' ],
-        exclude: [
-          /node_modules/,
-          /src\/app\/.*/,
+        include: [
+          /node_modules\/flow-webpack-plugin\/.*/,
+          /webpack\.config\.babel\.js$/,
+          /src\/server\/.*/,
+          /src\/client\/.*/,
         ],
       },
     ],
@@ -117,7 +127,7 @@ export const clientConfig = config({
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
   ],
-  plugins: commonPlugins.concat(clientPlugins),
+  plugins: plugins.concat(clientPlugins),
 })
 
 const serverConfig = config({
@@ -125,7 +135,7 @@ const serverConfig = config({
   prefix: 'server',
   bundleName: 'server.js',
   entry: [],
-  plugins: commonPlugins.concat(serverPlugins),
+  plugins: plugins.concat(serverPlugins),
 })
 
 // Export only the server if we are in dev, so that the server can run
