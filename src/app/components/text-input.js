@@ -23,6 +23,10 @@ class comp extends Component {
     //TODO Something
   }
 
+  send (text: string) {
+    // TODO Something
+  }
+
   render() {
     return (
       <View style={styles.view}>
@@ -30,6 +34,7 @@ class comp extends Component {
         value={this.state.message}
         onChangeText={this.change(this.state.message)}
         style={styles.input}
+        onSubmit={this.send(this.state.message)}
         />
       </View>
     )
