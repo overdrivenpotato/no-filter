@@ -17,5 +17,7 @@ export const fetchUser = (id: Id) =>
           id,
           user,
         })
+
+        return user
       })
   )

@@ -86,6 +86,7 @@ export const newConversation = (id?: Id) =>
       .then(() => fetch(`/conversations`, fetchOptions))
       .then(response => response.json())
       .then(response => {
+        state.navigation.navigate('conversations')
         dispatch({
           type: Actions.NEW,
           id: response.id,

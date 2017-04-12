@@ -7,6 +7,8 @@ import * as commonColors from 'app/common-colors'
 
 import { newConversation } from 'app/actions/conversations'
 
+import type { User } from 'app/reducers/users'
+
 import Text from 'app/components/text'
 import Button from 'app/components/Button'
 
@@ -36,16 +38,18 @@ const styles = {
 }
 
 type Props = {
+  user: User,
   name: string,
   add: () => void,
   decline: () => void,
+  navigation: any,
 }
 
-const Component = ({ name, add, decline }: Props) => (
+const Component = ({ navigation, name, add, decline }: Props) => (
   <View style={styles.component}>
     <View style={styles.bodyView}>
       <Text style={styles.bodyText}>
-        Would you like to add {'\n'} {name}
+        Confirm add?{'\n'}
       </Text>
     </View>
     <View style={styles.boxcontainer}>
@@ -55,8 +59,8 @@ const Component = ({ name, add, decline }: Props) => (
   </View>
 )
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  add: () => dispatch(newConversation()),
+const mapDispatchToProps = (dispatch: Dispatch, props) => ({
+  add: () => dispatch(newConversation(props.navigation.state.params.name)),
 })
 
 const mapStateToProps = (state, props) => ({
