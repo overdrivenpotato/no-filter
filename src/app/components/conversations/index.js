@@ -58,7 +58,16 @@ const mapStateToProps = (state: State): StateProps => {
     .map((conversationId, index) => {
       const conversation = state.conversations[conversationId]
       const messages = conversation.messages
-      const lastMessage = messages[messages.length - 1]
+      // FIXME: Workaround for new chats.
+      const lastMessage = messages.length === 0
+        ? {
+          type: index === 0 ? 'first' : 'message',
+          state: 'final',
+          user: conversation.users[0],
+          conversation: conversationId,
+          text: 'Send a message!',
+        }
+        : messages[messages.length - 1]
 
       return {
         type: index === 0 ? 'first' : 'message',

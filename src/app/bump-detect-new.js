@@ -3,6 +3,7 @@
 import { create as createTimesyncServer } from 'timesync/src/timesync'
 
 import { timesyncServer, fetch } from './api'
+import { fetchUser } from 'app/actions/users'
 
 import type { State } from 'app/reducers'
 
@@ -27,13 +28,18 @@ export default (state: State, dispatch: Dispatch) => {
 
   fetch('/bump', fetchOptions)
     .then(response => response.json())
-    .then(response => (
-      fetch(`/user/${response.user}`)
-        .then(response => response.json())
-    ))
-    .then(user => {
-      // state.navigate('addConfirm', user)
-      alert(`Matched with user: ${user.name}!`)
+    .then(response => {
+      // FIXME: Don't add a user we have cached
+      // Should be done server side
+      if (!state.users[response.user]) {
+        fetchUser(response.user)(dispatch)
+          .then(user => {
+            state.navigation.navigate('addConfirm', {
+              id: response.user,
+              user: user,
+            })
+          })
+      }
     })
     .catch(() => console.log('No bump detected'))
 }

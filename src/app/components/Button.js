@@ -30,10 +30,11 @@ const styles = {
 type Props = {
   onPress: () => void,
   children?: any,
+  style?: any,
 }
 
-export default ({ onPress, children }: Props) => (
-  <View style={styles.view}>
+export default ({ onPress, children, style = {} }: Props) => (
+  <View style={[ styles.view, style]}>
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Text style={styles.text}>
         {children}

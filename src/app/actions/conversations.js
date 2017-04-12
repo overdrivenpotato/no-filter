@@ -13,17 +13,29 @@ export const fetchConversations = (id: Id) =>
   (dispatch: (Action | UsersAction) => void, getState: () => State) => (
     fetch(`/user/${id}/conversations`)
       .then(response => response.json())
-      .then(response => {
-        console.log(response)
-        return response
-      })
       .then(conversations => {
         const state = getState()
         const promises = []
 
         // Extract users that we need to fetch
         Object.keys(conversations).forEach(key => {
-          conversations[key].messages.forEach(message => {
+          const conversation = conversations[key]
+
+          // If there are no messages we set an empty array
+          if (!conversation.messages) {
+            conversation.messages = []
+          }
+
+          // Fetch the user profiles of the current chat users
+          conversation.users.forEach(user => {
+            if (!state.users[user]) {
+              promises.push(fetchUser(user)(dispatch))
+            }
+          })
+
+          // Fetch the user profiles of all people who have chatted in this
+          // conversation
+          conversation.messages.forEach(message => {
             if (!state.users[message.user]) {
               promises.push(fetchUser(message.user)(dispatch))
             }
@@ -40,3 +52,39 @@ export const fetchConversations = (id: Id) =>
       })
       .catch(err => console.log(err))
   )
+
+export const newConversation = () =>
+  (dispatch: (Action | UsersAction) => void, getState: () => State) => {
+    const state = getState()
+    const otherUser = state.navigation.state.params.id
+
+    const body = {
+      users: [
+        state.user,
+        otherUser,
+      ]
+    }
+
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }
+
+    fetchUser(otherUser)(dispatch)
+      .then(() => fetch(`/conversations`, fetchOptions))
+      .then(response => response.json())
+      .then(response => {
+        dispatch({
+          type: Actions.NEW,
+          id: response.id,
+          conversation: {
+            users: [ otherUser ],
+            messages: [],
+          }
+        })
+      })
+      .catch(err => console.log(err))
+  }

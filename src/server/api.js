@@ -1,5 +1,6 @@
 // @flow
 
+import genUuid from 'uuid/v4'
 import express from 'express'
 import firebase from 'firebase-admin'
 
@@ -31,6 +32,11 @@ api.get('/user/:userId', (req, res) => {
 api.get('/user/:userId/conversations', (req, res) => {
   const userId = req.params.userId
 
+  const removeSelf = (conversation) => ({
+    ...conversation,
+    users: conversation.users.filter(id => id !== userId),
+  })
+
   database
     .ref(`/users/${userId}/conversations`)
     .once('value')
@@ -47,7 +53,7 @@ api.get('/user/:userId/conversations', (req, res) => {
           // Map the conversations into a hashmap of { [id]: conversation }
           ids.reduce((acc, id, index) => ({
             ...acc,
-            [id]: conversations[index].val(),
+            [id]: removeSelf(conversations[index].val()),
           }), {})
         ))
     ))
@@ -66,7 +72,8 @@ api.post('/bump', (req, res) => {
   const max = timestamp + SEARCH_WINDOW
 
   // First we scan for a match before trying to make a new bump
-  database.ref('/bump')
+  database
+    .ref('/bump')
     .orderByChild('timestamp')
     .startAt(min)
     .endAt(max)
@@ -91,6 +98,31 @@ api.post('/bump', (req, res) => {
         timedBump({ user, timestamp })
       }
     })
+})
+
+api.post('/conversations', (req, res) => {
+  const { users } = req.body
+  const uuid = genUuid()
+
+  for (const user of users) {
+    const ref = database.ref(`/users/${user}/conversations`)
+
+    ref
+      .once('value')
+      .then(conversations => {
+        const val = conversations.val() || []
+        val.push(uuid)
+        return val
+      })
+      .then(conversations => {
+        ref.set(conversations)
+      })
+  }
+
+  database.ref(`/conversation/${uuid}`)
+    .set({ users })
+
+  res.json({ id: uuid })
 })
 
 export default api

@@ -43,7 +43,7 @@ const pages = {
     screen: routeWrapper(AboutUser, 'My Profile'),
   },
   addConfirm: {
-    screen: routeWrapper(AddConfirm, params => `Add ${params.name}`),
+    screen: routeWrapper(AddConfirm, params => `Add ${params.user.name}`),
   },
   about: {
     screen: routeWrapper(About, 'About', false),
