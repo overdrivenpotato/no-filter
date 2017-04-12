@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { AsyncStorage, View, TextInput, Keyboard, ScrollView } from 'react-native'
 import firebase from 'firebase'
 
+import Register from './register'
 import * as commonColors from 'app/common-colors'
 import Button from './Button'
 import Text from 'app/components/text'
@@ -48,6 +49,7 @@ class LoginForm extends React.Component {
     password: '',
     error: '',
     loading: false,
+    register: false,
   }
 
   props: DispatchProps
@@ -66,7 +68,9 @@ class LoginForm extends React.Component {
   }
 
   redirectRegister = () => {
-    // TODO redirect to register screen
+    this.setState({
+      register: !this.state.register,
+    })
   }
 
   displayError = () => {
@@ -97,7 +101,7 @@ class LoginForm extends React.Component {
     }
   }
 
-  render () {
+  renderLogin () {
     return (
       <ScrollView style={styles.component}>
         <View style={styles.title}>
@@ -128,6 +132,10 @@ class LoginForm extends React.Component {
       </ScrollView>
     )
   }
+
+  render() {
+    return this.state.register ? <Register login={this.props.login} redirectLogin={this.redirectRegister} /> : this.renderLogin()
+  }
 }
 
 type DispatchProps = {
@@ -136,7 +144,6 @@ type DispatchProps = {
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   login: id => {
-    AsyncStorage.setItem('userId', id)
     dispatch(login(id))
   },
 })

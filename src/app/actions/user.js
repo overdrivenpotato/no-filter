@@ -6,19 +6,30 @@ import { Actions } from 'app/reducers/user'
 import { fetchConversations } from 'app/actions/conversations'
 import { fetchUser } from 'app/actions/users'
 
-import type { Id } from 'app/reducers'
+import bumpDetect from 'app/bump-detect'
+import bumpDetectNew from 'app/bump-detect-new'
+
+import type { Id, State } from 'app/reducers'
 import type { Action } from 'app/reducers/user'
 
 export const login = (id: Id) =>
-  (dispatch: Dispatch) => (
+  (dispatch: Dispatch, getState: () => State) => (
     Promise.all([
       dispatch(fetchConversations(id)),
       dispatch(fetchUser(id)),
     ])
-      .then(() => dispatch({
-        type: Actions.LOGIN,
-        user: id,
-      }))
+      .then(() => {
+        dispatch({
+          type: Actions.LOGIN,
+          user: id,
+        })
+
+        // Save the user ID for logging in later
+        AsyncStorage.setItem('userId', id)
+
+        // Enable bump detection here
+        bumpDetect(() => bumpDetectNew(getState(), dispatch))
+      })
       .catch(err => console.log(err))
   )
 

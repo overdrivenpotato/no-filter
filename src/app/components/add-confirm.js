@@ -40,7 +40,6 @@ export default () => (
         John Smith{'\n'}{'\n'}
       </Text>
     </View>
-
     <View style={styles.boxcontainer}>
       <View style={styles.boxstyle}>
         <Button
@@ -49,7 +48,6 @@ export default () => (
           color='#ddd'
         />
       </View>
-
       <View style={styles.boxstyle}>
         <Button
           onPress={() => { Alert.alert('Rejected') }}

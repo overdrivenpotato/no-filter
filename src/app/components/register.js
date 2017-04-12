@@ -17,6 +17,7 @@ const styles = {
     elevation: 2,
     backgroundColor: commonColors.DARK_BG,
     marginBottom: 30,
+    paddingTop: 20,
   },
   text: {
     fontSize: 25,
@@ -65,25 +66,16 @@ class LoginForm extends Component {
   }
 
   redirectLogin = () => {
-    /*
-      TODO some logic to redirect to the login screen
-    */
+    this.props.redirectLogin()
   }
 
   onRegisterSuccess = () => {
     const { email, name } = this.state
+    const id = firebase.auth().currentUser.uid
 
-    firebase.database().ref('/users/' + firebase.auth().currentUser.uid).set(
-      {
-        name: name,
-        email: email,
-      }
-    )
-
-    this.setState({ error: 'Registered!', loading: false })
-    /*
-      TODO logic to execute when the user registers
-    */
+    firebase.database().ref('/users/' + id).set({ name, email }, () => (
+      this.props.login(id)
+    ))
   }
 
   displayError = () => {

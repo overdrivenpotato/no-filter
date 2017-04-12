@@ -43,6 +43,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "timesync": "https://github.com/overdrivenpotato/timesync#c802732f4a0509813ce2fdb15ce9e526f4ba72aa",
+    "uuid": "^3.0.1",
     "webpack": "2",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.18.0",
