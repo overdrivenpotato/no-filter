@@ -34,7 +34,7 @@ class comp extends Component {
         value={this.state.message}
         onChangeText={this.change(this.state.message)}
         style={styles.input}
-        onSubmit={this.send(this.state.message)}
+        onSubmitEditing={this.send(this.state.message)}
         />
       </View>
     )
