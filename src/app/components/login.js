@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
   }
 
   displayError = () => {
-    this.setState({ error: 'There was an error loggin in.', loading: false })
+    this.setState({ error: 'There was an error logging in.', loading: false })
   }
 
   renderLoginButton () {
@@ -92,7 +92,7 @@ class LoginForm extends React.Component {
   renderRegisterButton () {
     if (!this.state.loading) {
       return (
-        <Button onPress={this.redirectRegister} children='Register'>
+        <Button onPress={this.redirectRegister}>
           Register
         </Button>
       )
