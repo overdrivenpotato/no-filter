@@ -20,14 +20,6 @@ firebase.initializeApp({
   messagingSenderId: '536468709239',
 })
 
-firebase.auth().signInWithEmailAndPassword('test@test.com', 'yo12345')
-  .then(() => {
-    console.log('loggin')
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
 export default () => {
   console.log(`Detected bump at ${Math.round(ts.now())}! :D`)
 

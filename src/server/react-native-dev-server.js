@@ -8,6 +8,7 @@ export default (port: number) => {
     env: {
       ...process.env,
       API_PORT: port,
+      API_SERVER: 'localhost',
     },
   })
 }

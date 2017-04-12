@@ -28,7 +28,11 @@ const styles = {
 
 export default ({ messages, type, state, time }: Props) => (
   <View style={styles.component}>
-    <Text style={styles.time}>{time.toLocaleTimeString()}</Text>
+    {
+      state === 'final'
+        ? <Text style={styles.time}>{time.toLocaleTimeString()}</Text>
+        : null
+    }
     {
       messages.map((message, index, array) => (
         <Message

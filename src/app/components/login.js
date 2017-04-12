@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { View, TextInput, Keyboard, ScrollView } from 'react-native'
+import { AsyncStorage, View, TextInput, Keyboard, ScrollView } from 'react-native'
 import firebase from 'firebase'
 
 import * as commonColors from 'app/common-colors'
@@ -10,6 +10,8 @@ import Button from './Button'
 import Text from 'app/components/text'
 import LoadingSpinner from './LoadingSpinner'
 import { login } from 'app/actions/user'
+import { fetchUser } from 'app/actions/users'
+import { fetchConversations } from 'app/actions/conversations'
 
 import type { Id } from 'app/reducers'
 
@@ -52,23 +54,19 @@ class LoginForm extends React.Component {
 
   sendLogin = () => {
     const { email, password } = this.state
+    const { login } = this.props
 
     Keyboard.dismiss()
 
     this.setState({ error: '', loading: true })
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(this.onLoginSuccess)
+      .then(firebaseUser => login(firebaseUser.uid))
       .catch(this.displayError)
   }
 
   redirectRegister = () => {
     // TODO redirect to register screen
-  }
-
-  onLoginSuccess = (user) => {
-    this.setState({ error: 'Logged in!', loading: false })
-    this.props.login(user.uid)
   }
 
   displayError = () => {
@@ -137,7 +135,10 @@ type DispatchProps = {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  login: id => dispatch(login(id)),
+  login: id => {
+    AsyncStorage.setItem('userId', id)
+    dispatch(login(id))
+  },
 })
 
 export default connect(null, mapDispatchToProps)(LoginForm)

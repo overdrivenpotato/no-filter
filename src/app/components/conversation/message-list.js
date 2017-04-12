@@ -8,7 +8,7 @@ import MessageGroup from './message-group'
 
 import type { State } from 'app/reducers'
 import type { Props as MessageGroupProps } from './message-group'
-import type { Message } from 'app/reducers/messages'
+import type { Message } from 'app/reducers/conversations'
 
 const date = new Date().toLocaleTimeString()
 
@@ -32,14 +32,13 @@ const messages = (state: State): Array<MessageGroupProps> => {
   // Extract the current conversation messages
   const conversationId = state.navigation.state.params.conversation
   const conversation = state.conversations[conversationId]
-  const messages = conversation.messages.map(id => state.messages[id])
 
   // Group them according to type and state
-  return messages.reduce((acc, value: Message) => {
+  return conversation.messages.reduce((acc, value: Message) => {
     const newMessage = {
-      type: value.type,
+      type: value.user === state.user ? 'to' : 'from',
       state: value.state,
-      time: value.date,
+      time: new Date(value.date),
       messages: [ value.text ],
     }
 
@@ -50,7 +49,9 @@ const messages = (state: State): Array<MessageGroupProps> => {
     const lastMessage = acc[acc.length - 1]
 
     // Push the message text into an existing group or make a new one if needed
-    if (value.type === lastMessage.type && value.state === lastMessage.state) {
+    const sameType = newMessage.type === lastMessage.type
+    const sameState = newMessage.state === lastMessage.state
+    if (sameType && sameState) {
       lastMessage.messages.push(value.text)
     } else {
       acc.push(newMessage)

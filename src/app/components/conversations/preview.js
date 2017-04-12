@@ -63,15 +63,9 @@ const styles = {
   },
 }
 
-type Props = {
-  user: User,
-  highlight: boolean,
-  message: string,
-  first?: boolean,
-  navigate: any,
-}
+type Props = InProps & StateProps
 
-const Component = ({user, message, highlight, first, navigate}: Props) => (
+const Component = ({userName, message, highlight, first, navigate}: Props) => (
   <TouchableNativeFeedback onPress={navigate}>
     <View style={[
       styles.container.base,
@@ -79,7 +73,7 @@ const Component = ({user, message, highlight, first, navigate}: Props) => (
     ]}>
       <View style={styles.paddedContainer}>
         <View style={styles.info}>
-          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.name}>{userName}</Text>
           <Text
             style={[
               highlight ? styles.highlight : {},
@@ -102,16 +96,24 @@ const Component = ({user, message, highlight, first, navigate}: Props) => (
 )
 
 type InProps = {
-  user: Id,
+  userId: Id,
   conversation: Id,
+  first: boolean,
+  highlight: boolean,
+  message: string,
 }
 
-const mapStateToProps = (state: State, { user, conversation }: InProps) => ({
+type StateProps = {
+  navigate: () => void,
+  userName: string,
+}
+
+const mapStateToProps = (state: State, { userId, conversation }: InProps): StateProps => ({
   navigate: () => state.navigation.navigate('conversation', {
-    name: state.users[user].name,
+    name: state.users[userId].name,
     conversation,
   }),
-  user: state.users[user],
+  userName: state.users[userId].name,
 })
 
 export default connect(mapStateToProps)(Component)

@@ -11,21 +11,9 @@ import LoadingSpinner from './LoadingSpinner'
 
 const styles = {
   component: {
-    flex: 1,
-  },
-  base: {
-    title: {
-      elevation: 2,
-      backgroundColor: commonColors.DARK_BG,
-      marginBottom: 30,
-    },
-  },
-
-  text: {
-    fontSize: 25,
-    alignSelf: 'center',
-    color: commonColors.RED,
-    padding: 30,
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingBottom: 30,
   },
   input: {
     marginLeft: 40,
@@ -88,17 +76,12 @@ class Adder extends Component {
   render () {
     return (
       <View style={styles.component}>
-        <View style={styles.base.title}>
-          <Text style={styles.text}>
-            Select a user
-          </Text>
-        </View>
         <Text style={styles.errorText}>
           {this.state.error}
         </Text>
         <TextInput value={this.state.nameToAdd}
           onChangeText={nameToAdd => this.setState({ nameToAdd })}
-          style={styles.input} placeholder='nameToAdd' autoCorrect={false} />
+          style={styles.input} placeholder='Email' autoCorrect={false} />
         {this.renderAddButton()}
       </View>
     )

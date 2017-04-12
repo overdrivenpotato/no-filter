@@ -1,5 +1,7 @@
 node_modules
 build
+credentials.json
+
 .gradle
 local.properties
 No Filter.iml

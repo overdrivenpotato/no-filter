@@ -1,6 +1,5 @@
 // @flow
 
-// Polyfills
 import 'whatwg-fetch'
 
 import React from 'react'
@@ -15,7 +14,7 @@ import bumpDetectTemporary from './bump-detect-temporary'
 
 // Extracted the bump detection handler into a temporary file. This file
 // contains logic which should be moved to the server eventually.
-bumpDetect(bumpDetectTemporary)
+// bumpDetect(bumpDetectTemporary)
 
 // Wrap the main app in a class so that we can hot reload reducers
 class Wrapper extends React.Component {

@@ -46,7 +46,7 @@ const pages = {
     screen: routeWrapper(AddConfirm, params => `Add ${params.name}`),
   },
   about: {
-    screen: routeWrapper(About, 'About'),
+    screen: routeWrapper(About, 'About', false),
   },
 }
 

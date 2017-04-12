@@ -17,6 +17,7 @@ const styles = {
       elevation: 2,
       backgroundColor: commonColors.DARK_BG,
       marginBottom: 30,
+      paddingTop: 20,
     },
   },
   titleText: {

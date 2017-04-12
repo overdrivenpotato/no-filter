@@ -35,7 +35,7 @@ const renderRow = (row: MessageRow | LastRow) => (
     ? <AddFriend />
     : (
       <Preview
-        user={row.user}
+        userId={row.user}
         conversation={row.conversation}
         highlight={row.state === 'typing'}
         message={row.message}
@@ -58,17 +58,18 @@ const mapStateToProps = (state: State): StateProps => {
     .map((conversationId, index) => {
       const conversation = state.conversations[conversationId]
       const messages = conversation.messages
-      const lastMessageId = messages[messages.length - 1]
-      const lastMessage = state.messages[lastMessageId]
+      const lastMessage = messages[messages.length - 1]
 
       return {
         type: index === 0 ? 'first' : 'message',
         state: lastMessage.state,
-        user: state.conversations[conversationId].user,
+        user: lastMessage.user,
         conversation: conversationId,
         message: lastMessage.text,
       }
     })
+
+  console.log(conversations)
 
   return {
     conversations: conversations.concat({ type: 'last' }),

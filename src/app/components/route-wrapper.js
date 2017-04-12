@@ -17,6 +17,7 @@ const styles = {
 type InProps = {
   component: any,
   id?: string | any => string,
+  showTitle: boolean,
   inProps: any,
 }
 
@@ -45,12 +46,12 @@ class Component extends React.Component {
   }
 
   render () {
-    const { component: Component, id, inProps } = this.props
+    const { component: Component, id, inProps, showTitle } = this.props
 
     return (
       <View style={styles.component}>
         {
-          typeof id !== 'undefined' ? <Toolbar /> : null
+          showTitle && typeof id !== 'undefined' ? <Toolbar /> : null
         }
         <Component {...inProps} />
       </View>
@@ -63,10 +64,10 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   updateNavigation: navigation => dispatch(updateNavigation(navigation)),
 })
 
-export default (component: any, id?: string | any => string) => {
+export default (component: any, id?: string | any => string, showTitle?: boolean = true) => {
   const Wrapper = connect(null, mapDispatchToProps)(Component)
 
   return (props: any) => (
-    <Wrapper component={component} id={id} inProps={props} />
+    <Wrapper component={component} id={id} showTitle={!!showTitle} inProps={props} />
   )
 }

@@ -1,43 +1,35 @@
 // @flow
 
 import type { Id } from './'
-import type { Message } from './messages'
+
+export type MessageState = 'typing' | 'final'
+export type Message = {
+  user: Id,
+  state: MessageState,
+  text: string,
+  date: Date,
+}
 
 export const Actions = {
-  FETCH: 'CONVERSATION_FETCH',
+  FETCH_ALL: 'CONVERSATION_FETCH_ALL',
 }
 
 export type Conversation = {
   user: Id,
-  messages: Array<Id>,
+  messages: Array<Message>,
 }
 
 export type State = { [Id]: Conversation }
 
-type Action =
-  | { type: 'CONVERSATION_FETCH', conversation: Conversation }
+export type Action =
+  | { type: 'CONVERSATION_FETCH_ALL', conversations: State }
 
-const defaultState: State = {
-  'convo-1': {
-    user: 'user-1',
-    messages: [
-      'message-1',
-      'message-2',
-    ],
-  },
-  'convo-2': {
-    user: 'user-2',
-    messages: [
-      'message-3',
-      'message-4',
-    ],
-  },
-}
+const defaultState: State = {}
 
 export default (state: State = defaultState, action: Action): State => {
   switch (action.type) {
-    case Actions.FETCH:
-      return state
+    case Actions.FETCH_ALL:
+      return action.conversations
 
     default:
       return state

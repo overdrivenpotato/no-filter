@@ -19,7 +19,8 @@ type StateProps = {
 
 type InProps = {
   icon: string,
-  location: string,
+  location?: string,
+  onPress?: () => void,
   screen: string,
 }
 
@@ -73,7 +74,7 @@ const Component = ({ drawer, icon, onPress, location }: Props) => (
 
 const mapStateToProps = (state: State, props: InProps): StateProps => ({
   drawer: state.drawer,
-  onPress: () => state.navigation.navigate(props.screen),
+  onPress: props.onPress || (() => state.navigation.navigate(props.screen)),
 })
 
 export default connect(mapStateToProps)(Component)

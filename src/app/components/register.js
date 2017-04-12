@@ -13,13 +13,10 @@ const styles = {
   component: {
     flex: 1,
   },
-  base: {
-    title: {
-      elevation: 2,
-      backgroundColor: commonColors.DARK_BG,
-      marginBottom: 30,
-    },
-
+  title: {
+    elevation: 2,
+    backgroundColor: commonColors.DARK_BG,
+    marginBottom: 30,
   },
   text: {
     fontSize: 25,
@@ -119,7 +116,7 @@ class LoginForm extends Component {
   render () {
     return (
       <ScrollView style={styles.component}>
-        <View style={styles.base.title}>
+        <View style={styles.title}>
           <Text style={styles.text}>
             Register An Account
           </Text>
