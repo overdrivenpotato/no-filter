@@ -28,18 +28,18 @@ export default (state: State, dispatch: Dispatch) => {
 
   fetch('/bump', fetchOptions)
     .then(response => response.json())
-    .then(response => {
+    .then(response => (
       // FIXME: Don't add a user we have cached
       // Should be done server side
-      if (!state.users[response.user]) {
-        fetchUser(response.user)(dispatch)
-          .then(user => {
-            state.navigation.navigate('addConfirm', {
-              id: response.user,
-              user: user,
-            })
+      // alert(`Adding ${response.user}`)
+      fetchUser(response.user)(dispatch)
+        .then(user => {
+          console.log(user)
+          state.navigation.navigate('addConfirm', {
+            id: response.user,
+            user: user,
           })
-      }
-    })
-    .catch(() => console.log('No bump detected'))
+        })
+    ))
+    .catch(err => console.log(err))
 }

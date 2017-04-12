@@ -32,6 +32,8 @@ class Component extends React.Component {
   componentWillMount () {
     const { id, updateTitle, updateNavigation, inProps } = this.props
 
+    console.log('asdf')
+    console.log(inProps.navigation)
     updateNavigation(inProps.navigation)
 
     if (typeof id === 'string') {
@@ -42,6 +44,7 @@ class Component extends React.Component {
   }
 
   componentWillReceiveProps (nextProps: any) {
+    console.log(nextProps)
     this.props.updateNavigation(nextProps.navigation)
   }
 

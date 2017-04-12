@@ -60,6 +60,7 @@ api.get('/user/:userId/conversations', (req, res) => {
     .then(conversations => {
       res.json(conversations)
     })
+    .catch(err => console.log(err))
 })
 
 api.post('/bump', (req, res) => {
@@ -97,6 +98,19 @@ api.post('/bump', (req, res) => {
         res.json({ user: filtered[0].user })
         timedBump({ user, timestamp })
       }
+    })
+})
+
+// hackkkkkk
+api.get('/conversations/:id/messages', (req, res) => {
+  const { id } = req.params
+
+  database
+    .ref(`/conversation/${id}/messages`)
+    .once('value')
+    .then(response => {
+      const messages = response.val() || []
+      return messages
     })
 })
 
