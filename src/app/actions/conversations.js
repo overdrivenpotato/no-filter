@@ -53,10 +53,19 @@ export const fetchConversations = (id: Id) =>
       .catch(err => console.log(err))
   )
 
-export const newConversation = () =>
+export const addByEmail = (email: string) =>
+  // FIXME: typing
+  (dispatch: (Action | UsersAction | any) => void, getState: () => State) => {
+    fetch(`/user-by-email/${email}`)
+      .then(response => response.json())
+      .then(user => dispatch(newConversation(Object.keys(user)[0])))
+      .catch(err => console.log(err))
+  }
+
+export const newConversation = (id?: Id) =>
   (dispatch: (Action | UsersAction) => void, getState: () => State) => {
     const state = getState()
-    const otherUser = state.navigation.state.params.id
+    const otherUser = id || state.navigation.state.params.id
 
     const body = {
       users: [
@@ -73,7 +82,7 @@ export const newConversation = () =>
       body: JSON.stringify(body),
     }
 
-    fetchUser(otherUser)(dispatch)
+    return fetchUser(otherUser)(dispatch)
       .then(() => fetch(`/conversations`, fetchOptions))
       .then(response => response.json())
       .then(response => {

@@ -1,8 +1,11 @@
 // @flow
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, TextInput, Keyboard } from 'react-native'
 import firebase from 'firebase'
+import { fetch } from 'app/api'
+import { addByEmail } from 'app/actions/conversations'
 
 import * as commonColors from 'app/common-colors'
 import Button from './Button'
@@ -37,11 +40,9 @@ class Adder extends Component {
     const { nameToAdd } = this.state
     Keyboard.dismiss()
     this.setState({ error: '', loading: true })
-
-    firebase.auth().getUser(nameToAdd)
-      .then(this.onAddSuccess.bind(this)
-      .catch(this.displayError.bind(this))
-      )
+    this.props.add(nameToAdd)
+    console.log(this.props)
+    this.props.navigate()
   }
 
   redirectToAdded = () => {
@@ -64,13 +65,11 @@ class Adder extends Component {
   }
 
   renderAddButton () {
-    if (!this.state.loading) {
-      return (
-        <Button onPress={this.addByName}>
-          Add
-        </Button>
-      )
-    }
+    return (
+      <Button onPress={this.addByName}>
+        Add
+      </Button>
+    )
   }
 
   render () {
@@ -88,4 +87,14 @@ class Adder extends Component {
   }
 }
 
-export default Adder
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  add: email => {
+    dispatch(addByEmail(email))
+  }
+})
+
+const mapStateToProps = (state) => ({
+  navigate: () => state.navigation.navigate('conversations'),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Adder)

@@ -56,7 +56,7 @@ const Component = ({ navigation, name, logout }: Props) => (
     <Link icon='ios-people' location='Messages' screen='conversations' />
     <Link
       icon='ios-phone-portrait'
-      location='Add By Number'
+      location='Add By Email'
       screen='addByNumber'
     />
     <Link icon='ios-information-circle' location='About' screen='about' />

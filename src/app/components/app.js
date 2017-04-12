@@ -34,7 +34,7 @@ const pages = {
     screen: routeWrapper(Conversation, params => params.name),
   },
   addByNumber: {
-    screen: routeWrapper(AddByNumber, 'Add By Number'),
+    screen: routeWrapper(AddByNumber, 'Add By Email'),
   },
   register: {
     screen: routeWrapper(Register),

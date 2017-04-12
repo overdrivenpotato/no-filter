@@ -125,4 +125,19 @@ api.post('/conversations', (req, res) => {
   res.json({ id: uuid })
 })
 
+// TMP
+// TODO: remove
+api.get('/user-by-email/:email', (req, res) => {
+  const email = req.params.email
+
+  database
+    .ref(`/users/`)
+    .orderByChild('email')
+    .equalTo(email)
+    .once('value')
+    .then(response => {
+      res.json(response.val())
+    })
+})
+
 export default api
