@@ -13,6 +13,7 @@ export type Message = {
 export const Actions = {
   FETCH_ALL: 'CONVERSATION_FETCH_ALL',
   NEW: 'CONVERSATION_NEW',
+  UPDATE: 'CONVESATION_UPDATE',
 }
 
 export type Conversation = {
@@ -25,6 +26,7 @@ export type State = { [Id]: Conversation }
 export type Action =
   | { type: 'CONVERSATION_FETCH_ALL', conversations: State }
   | { type: 'CONVERSATION_NEW', id: Id, conversation: Conversation }
+  | { type: 'CONVERSATION_UPDATE', id: Id, messages: Array<Message> }
 
 const defaultState: State = {}
 
@@ -37,6 +39,21 @@ export default (state: State = defaultState, action: Action): State => {
       return {
         ...state,
         [action.id]: action.conversation,
+      }
+
+    case Actions.UPDATE:
+      console.log('update triggered')
+      console.log(state)
+      console.log(action)
+
+      const conversation = {
+        ...state[action.id],
+        messages: action.messages,
+      }
+
+      return {
+        ...state,
+        [action.id]: conversation,
       }
 
     default:

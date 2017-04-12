@@ -29,13 +29,13 @@ api.get('/user/:userId', (req, res) => {
     })
 })
 
+const removeSelf = (conversation, userId) => ({
+  ...conversation,
+  users: conversation.users.filter(id => id !== userId),
+})
+
 api.get('/user/:userId/conversations', (req, res) => {
   const userId = req.params.userId
-
-  const removeSelf = (conversation) => ({
-    ...conversation,
-    users: conversation.users.filter(id => id !== userId),
-  })
 
   database
     .ref(`/users/${userId}/conversations`)
@@ -53,7 +53,7 @@ api.get('/user/:userId/conversations', (req, res) => {
           // Map the conversations into a hashmap of { [id]: conversation }
           ids.reduce((acc, id, index) => ({
             ...acc,
-            [id]: removeSelf(conversations[index].val()),
+            [id]: removeSelf(conversations[index].val(), userId),
           }), {})
         ))
     ))
@@ -110,7 +110,7 @@ api.get('/conversations/:id/messages', (req, res) => {
     .once('value')
     .then(response => {
       const messages = response.val() || []
-      return messages
+      res.json(messages)
     })
 })
 
@@ -152,6 +152,27 @@ api.get('/user-by-email/:email', (req, res) => {
     .then(response => {
       res.json(response.val())
     })
+})
+
+api.put('/conversations/:id/:message', (req, res) => {
+  const { id, message } = req.params
+  const { text } = req.body
+
+  database
+    .ref(`/conversation/${id}/messages/${message}/text`)
+    .set(text)
+
+  res.sendStatus(200)
+})
+
+api.post('/conversations/:id/:message', (req, res) => {
+  const { id, message } = req.params
+
+  database
+    .ref(`/conversations/${id}/messages/${message}/state`)
+    .set('final')
+
+  res.sendStatus(200)
 })
 
 export default api

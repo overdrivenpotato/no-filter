@@ -98,3 +98,37 @@ export const newConversation = (id?: Id) =>
       })
       .catch(err => console.log(err))
   }
+
+export const updateConversation = (id: Id) =>
+  (dispatch: Dispatch) => {
+    return fetch(`/conversations/${id}/messages`)
+      .then(response => response.json())
+      .then(messages => {
+        dispatch({
+          type: Actions.UPDATE,
+          id,
+          messages,
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+export const updateText = (id: any, message: any, text: any) =>
+  (dispatch: Dispatch, getState: () => State) => {
+    const state = getState()
+
+    const fetchOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(text)
+    }
+
+    console.log(id)
+    console.log(message)
+    console.log(text)
+
+    fetch(`/conversations/${id}/${message}`, fetchOptions)
+      .catch(err => console.log(err))
+  }
