@@ -8,24 +8,23 @@ import TimesyncServer from 'timesync/server'
 import bodyParser from 'body-parser'
 
 import { clientConfig } from '../../webpack.config.babel.js'
+import api from './api'
 import {
-    checkData,
-    insertData,
-    checkBumpsInArea,
-    removeUserFromBumps,
-    REMOVE_TIME,
-    BUMP_TIME } from './helper-functions'
+  checkData,
+  insertData,
+  checkBumpsInArea,
+  removeUserFromBumps,
+  REMOVE_TIME,
+  BUMP_TIME,
+} from './helper-functions'
 
 const routes = express.Router()
 
+routes.use('/api', api)
 routes.use(bodyParser.json())       // to support JSON-encoded bodies
 routes.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true,
 }))
-
-routes.get('/api/', (req, res) => {
-  res.json({ test: 'Hello!' })
-})
 
 /*
 Inserts a new bump request into the firebase database at location /bumps/<user>
