@@ -154,25 +154,105 @@ api.get('/user-by-email/:email', (req, res) => {
     })
 })
 
-api.put('/conversations/:id/:message', (req, res) => {
-  const { id, message } = req.params
-  const { text } = req.body
+api.put('/conversations/:id/messages', (req, res) => {
+  const { id } = req.params
+  const { text, user } = req.body
 
-  database
-    .ref(`/conversation/${id}/messages/${message}/text`)
-    .set(text)
+  console.log(req.params)
+  console.log(req.body)
 
-  res.sendStatus(200)
+  const ref = database.ref(`/conversation/${id}/messages`)
+
+  ref
+    .orderByChild('user')
+    .equalTo(user)
+    .once('value')
+    .then(response => {
+      const messages = response.val()
+
+      const newMessage = () => {
+        ref
+          .push()
+          .set({
+            date: Date.now(),
+            state: 'typing',
+            text: text,
+            user: user,
+          })
+
+        res.sendStatus(200)
+      }
+
+      if (!messages) {
+        newMessage()
+        return
+      }
+
+      const keys = Object.keys(messages)
+
+      const lastMessage = keys
+        .map(key => ({
+          ...messages[key],
+          id: key,
+        }))
+        .sort((a, b) => a.date - b.date)
+        .pop()
+
+      if (lastMessage.state === 'typing') {
+        ref
+          .child(lastMessage.id)
+          .child('text')
+          .set(text)
+      } else {
+        newMessage()
+      }
+
+      res.sendStatus(200)
+    })
 })
 
-api.post('/conversations/:id/:message', (req, res) => {
-  const { id, message } = req.params
+api.post('/conversations/:id/messages', (req, res) => {
+  const { id } = req.params
+  const { user } = req.body
 
-  database
-    .ref(`/conversations/${id}/messages/${message}/state`)
-    .set('final')
+  const ref = database.ref(`/conversation/${id}/messages`)
 
-  res.sendStatus(200)
+  ref
+    .orderByChild('user')
+    .equalTo(user)
+    .once('value')
+    .then(response => {
+      const messages = response.val()
+
+      if (!messages) {
+        res.sendStatus(400)
+        return
+      }
+
+      const keys = Object.keys(messages)
+
+      const lastMessage = keys
+        .map(key => ({
+          ...messages[key],
+          id: key,
+        }))
+        .sort((a, b) => a.date - b.date)
+        .pop()
+
+      console.log(lastMessage)
+
+      if (lastMessage.state === 'final') {
+        res.sendStatus(400)
+      } else {
+        console.log(lastMessage.id)
+        ref
+          .child(lastMessage.id)
+          .child('state')
+          .set('final')
+
+        res.sendStatus(200)
+      }
+    })
 })
 
 export default api
