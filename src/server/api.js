@@ -76,18 +76,18 @@ api.post('/bump', (req, res) => {
 
       if (!bumps) {
         watchBump(res, min, max, timedBump({ user, timestamp }))
-        console.log(`No Matching bumps were found ${user}`)
         return
       }
 
-      console.log(`Matching bumps were found ${user}`)
+      // Filter for bumps that fit the timestamp window
+      const filtered = Object.keys(bumps)
+        .map(key => bumps[key])
+        .filter(bump => bump.timestamp > min && bump.timestamp < max)
 
-      const keys = Object.keys(bumps)
-
-      if (keys.length > 1) {
-        res.send('Multiple bumps')
+      if (filtered.length > 1) {
+        res.sendStatus(404)
       } else {
-        res.send('Got a bump!!!')
+        res.json({ user: filtered[0].user })
         timedBump({ user, timestamp })
       }
     })
